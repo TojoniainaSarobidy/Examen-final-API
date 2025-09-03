@@ -1,0 +1,64 @@
+openapi: 3.0.3
+info:
+  title: STD24025
+  description: This is a specification of STD24025
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8000
+
+paths:
+  /health:
+    get:
+      summary: Check API health
+      description: Returns a simple message to indicate that the API is running.
+      responses:
+        '200':
+          description: API is healthy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+
+  /phones:
+    get:
+      summary: Get all phones
+      description: Returns the list of all phones saved in memory.
+      responses:
+        '200':
+          description: List of phones
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Phone'
+
+components:
+  schemas:
+    HealthResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          example: "OK"
+
+    Phone:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        brand:
+          type: string
+          example: "Apple"
+        model:
+          type: string
+          example: "iPhone 14"
+
+    ErrorResponse:
+      type: object
+      properties:
+        detail:
+          type: string
+          example: "Phone with the provided ID was not found"
